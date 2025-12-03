@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LSTS Trip 2025</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Poppins', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    colors: {
+                        brand: {
+                            gold: '#D4AF37',
+                            green: '#2D5A27',
+                            earth: '#8B4513',
+                            light: '#F3F4F6',
+                            blue: '#1e3a8a'
+                        }
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'fade-in': 'fadeIn 1s ease-out',
+                        'slide-up': 'slideUp 0.8s ease-out',
+                        'bounce-slow': 'bounceSlow 2s ease-in-out infinite',
+                        'shimmer': 'shimmer 2s linear infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        },
+                        fadeIn: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        slideUp: {
+                            '0%': { opacity: '0', transform: 'translateY(30px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        bounceSlow: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-15px)' },
+                        },
+                        shimmer: {
+                            '0%': { backgroundPosition: '-1000px 0' },
+                            '100%': { backgroundPosition: '1000px 0' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #8B4513; 
+            border-radius: 4px;
+        }
+
+        /* Image Hover Effects */
+        .img-zoom-container {
+            overflow: hidden;
+            background-color: #e5e7eb; /* Fallback color */
+        }
+        .img-zoom {
+            transition: transform 0.7s ease;
+        }
+        .img-zoom:hover {
+            transform: scale(1.1);
+        }
+
+        /* Timeline Connector */
+        .timeline-line::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            width: 2px;
+            background: #e5e7eb;
+            transform: translateX(-50%);
+            z-index: -1;
+        }
+        
+        /* Fade In Animation Class */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Hero Text Shadow */
+        .text-shadow-lg {
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+        }
+
+        /* Shimmer Effect for Buttons */
+        .shimmer {
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            background-size: 200% 100%;
+            animation: shimmer 2s linear infinite;
+        }
+
+        /* Card Hover Glow */
+        .card-glow {
+            transition: all 0.3s ease;
+        }
+        .card-glow:hover {
+            box-shadow: 0 20px 40px rgba(212, 175, 55, 0.3);
+            transform: translateY(-5px);
+        }
+
+        /* Smooth Transitions */
+        * {
+            transition-property: transform, opacity, box-shadow;
+            transition-duration: 0.3s;
+            transition-timing-function: ease-out;
+        }
+
+        /* Gradient Text Animation */
+        .gradient-text {
+            background: linear-gradient(90deg, #D4AF37, #2D5A27, #8B4513, #D4AF37);
+            background-size: 300% 100%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradient-shift 5s ease infinite;
+        }
+
+        @keyframes gradient-shift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+    </style>
+</head>
+<body class="bg-stone-50 text-gray-800 antialiased">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 transition-all duration-300 bg-white/90 backdrop-blur-md shadow-sm" id="navbar">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="text-2xl font-serif font-bold text-brand-earth flex items-center gap-2">
+                <i class="fas fa-bus text-brand-gold"></i> LSTS TRIP
+            </a>
+            <div class="hidden md:flex space-x-8 font-medium text-sm">
+                <a href="#itinerary" class="hover:text-brand-green transition">Itinerary</a>
+                <a href="#map" class="hover:text-brand-green transition">Route Map</a>
+                <a href="#budget" class="hover:text-brand-green transition">Budget</a>
+                <a href="#summary" class="hover:text-brand-green transition">Summary</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="relative h-screen flex items-center justify-center overflow-hidden bg-gray-900">
+        <!-- Background with Overlay -->
+        <div class="absolute inset-0 z-0">
+            <!-- Restored the original "Perfect" Hero Image (Hampi Stone Chariot) -->
+            <img 
+                src="https://images.unsplash.com/photo-1590050752117-238cb0fb12b1?auto=format&fit=crop&w=1920&q=80" 
+                onerror="this.src='https://placehold.co/1920x1080/2D5A27/FFF?text=South+India+Road+Trip'"
+                alt="Hampi Stone Chariot" 
+                class="w-full h-full object-cover animate-float" 
+                style="animation-duration: 20s; transform-origin: center;"
+            >
+            <div class="absolute inset-0 bg-black/40 bg-gradient-to-b from-black/60 via-transparent to-stone-50"></div>
+        </div>
+
+        <div class="relative z-10 text-center text-white px-4 reveal active">
+            <div class="inline-block border-2 border-brand-gold px-4 py-1 rounded-full text-brand-gold text-sm font-semibold tracking-wider mb-4 bg-black/30 backdrop-blur-sm">
+                DEC 29 - JAN 5
+            </div>
+            <h1 class="text-5xl md:text-7xl font-serif font-bold mb-6 text-shadow-lg">
+                LSTS School Trip <br/> <span class="text-brand-gold">2025</span>
+            </h1>
+            <p class="text-xl md:text-2xl font-light mb-8 max-w-2xl mx-auto text-gray-200">
+                Hyderabad • Hampi • Mysore • Ooty • Coorg
+            </p>
+            
+            <!-- Countdown -->
+            <div class="grid grid-cols-4 gap-4 max-w-lg mx-auto mb-10 text-center">
+                <div class="bg-black/40 backdrop-blur-sm p-3 rounded-lg border border-white/20">
+                    <span id="days" class="block text-3xl font-bold text-brand-gold">00</span>
+                    <span class="text-xs uppercase tracking-wide">Days</span>
+                </div>
+                <div class="bg-black/40 backdrop-blur-sm p-3 rounded-lg border border-white/20">
+                    <span id="hours" class="block text-3xl font-bold text-brand-gold">00</span>
+                    <span class="text-xs uppercase tracking-wide">Hrs</span>
+                </div>
+                <div class="bg-black/40 backdrop-blur-sm p-3 rounded-lg border border-white/20">
+                    <span id="minutes" class="block text-3xl font-bold text-brand-gold">00</span>
+                    <span class="text-xs uppercase tracking-wide">Mins</span>
+                </div>
+                <div class="bg-black/40 backdrop-blur-sm p-3 rounded-lg border border-white/20">
+                    <span id="seconds" class="block text-3xl font-bold text-brand-gold">00</span>
+                    <span class="text-xs uppercase tracking-wide">Secs</span>
+                </div>
+            </div>
+
+            <a href="#itinerary" class="inline-block bg-brand-gold text-black font-semibold px-8 py-3 rounded-full hover:bg-white transition transform hover:scale-105 shadow-lg relative overflow-hidden group">
+                <span class="relative z-10">View Itinerary <i class="fas fa-arrow-down ml-2 animate-bounce-slow"></i></span>
+                <span class="absolute inset-0 shimmer"></span>
+            </a>
+        </div>
+    </header>
+
+    <!-- Itinerary Section -->
+    <section id="itinerary" class="py-20 container mx-auto px-4">
+        <div class="text-center mb-16 reveal">
+            <h2 class="text-4xl md:text-5xl font-serif font-bold text-brand-earth mb-4 gradient-text">Daily Itinerary</h2>
+            <div class="w-24 h-1 bg-brand-gold mx-auto transform transition-all duration-500 hover:w-32"></div>
+            <p class="text-gray-600 mt-4 max-w-2xl mx-auto text-lg">7 Days, 5 Cities, 2300 Kilometers. <br> A curated guide of places, experiences, and local flavors.</p>
+        </div>
+
+        <div class="relative timeline-line space-y-24">
+            
+            <!-- Day 1 -->
+            <div class="relative z-10 reveal">
+                <div class="flex flex-col md:flex-row items-start gap-8">
+                    <div class="w-full md:w-1/2 md:text-right order-2 md:order-1">
+                        <h3 class="text-3xl font-serif font-bold text-gray-900">The Night Drive</h3>
+                        <p class="text-brand-green font-bold mb-4 uppercase tracking-wide">Dec 29 • Evening (6 PM)</p>
+                        
+                        <div class="space-y-6">
+                            <div>
+                                <h4 class="text-lg font-bold text-brand-earth mb-2"><i class="fas fa-map-marker-alt"></i> Route</h4>
+                                <p class="text-gray-600">Hyderabad → Hampi (370 km)</p>
+                            </div>
+                            
+                            <div>
+                                <h4 class="text-lg font-bold text-brand-earth mb-2"><i class="fas fa-utensils"></i> Food to Eat</h4>
+                                <p class="text-gray-600">Stop at a <strong>Highway Dhaba</strong> near Zaheerabad. Try <em>Butter Naan, Dal Tadka, and Egg Bhurji</em>. Don't forget the hot tea!</p>
+                            </div>
+
+                            <div class="bg-stone-100 p-4 rounded-lg border-l-4 border-brand-earth inline-block text-left">
+                                <span class="block text-xs font-bold text-gray-500 uppercase">Accommodation</span>
+                                <span class="text-gray-900 font-semibold"><i class="fas fa-shuttle-van mr-2"></i>Overnight in Tempo Traveller</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="w-12 h-12 bg-brand-gold rounded-full border-4 border-white shadow-lg flex items-center justify-center font-bold text-white z-20 shrink-0 order-1 md:order-2 mt-4">1</div>
+                    
+                    <div class="w-full md:w-1/2 order-3">
+                        <div class="img-zoom-container rounded-xl shadow-xl h-80 overflow-hidden relative">
+                            <!-- Stable Highway Image -->
+                            <img 
+                                src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?q=80&w=800&auto=format&fit=crop" 
+                                onerror="this.src='https://placehold.co/800x600/333/FFF?text=Night+Drive'"
+                                class="w-full h-full object-cover img-zoom" 
+                                alt="Highway Night"
+                            >
+                            <div class="absolute bottom-0 left-0 bg-black/50 text-white px-4 py-2 text-sm w-full">Hyderabad to Hampi Highway</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Day 2: Hampi -->
+            <div class="relative z-10 reveal">
+                <div class="flex flex-col md:flex-row items-start gap-8">
+                    <div class="w-full md:w-1/2 order-2 md:order-1">
+                        <div class="img-zoom-container rounded-xl shadow-xl h-full min-h-[400px] overflow-hidden relative">
+                             <!-- Stable Hampi Image -->
+                            <img 
+                                src="https://images.unsplash.com/photo-1620766165457-a8025baa82e0?q=80&w=800&auto=format&fit=crop" 
+                                onerror="this.src='https://placehold.co/800x600/d4af37/000?text=Hampi+Ruins'"
+                                class="w-full h-full object-cover img-zoom" 
+                                alt="Hampi Ruins"
+                            >
+                            <div class="absolute bottom-0 left-0 bg-gradient-to-t from-black/80 to-transparent text-white p-6 w-full">
+                                <h4 class="font-bold text-xl">The Boulder City</h4>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="w-12 h-12 bg-brand-green rounded-full border-4 border-white shadow-lg flex items-center justify-center font-bold text-white z-20 shrink-0 order-1 md:order-2 mt-4">2</div>
+                    
+                    <div class="w-full md:w-1/2 order-3">
+                        <h3 class="text-3xl font-serif font-bold text-gray-900">Ruins of Hampi</h3>
+                        <p class="text-brand-green font-bold mb-4 uppercase tracking-wide">Dec 30 • 7 AM - 5 PM</p>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                            <div>
+                                <h4 class="text-lg font-bold text-brand-earth mb-2"><i class="fas fa-gopuram"></i> Places to Visit</h4>
+                                <ul class="text-sm text-gray-600 space-y-2">
+                                    <li>• <strong>Virupaksha Temple:</strong> The living temple.</li>
+                                    <li>• <strong>Vithala Temple:</strong> Famous Stone Chariot.</li>
+                                    <li>• <strong>Lotus Mahal:</strong> Indo-Islamic architecture.</li>
+                                    <li>• <strong>Elephant Stables:</strong> Royal shelters.</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-bold text-brand-earth mb-2"><i class="fas fa-hiking"></i> Experiences</h4>
+                                <ul class="text-sm text-gray-600 space-y-2">
+                                    <li>• <strong>Coracle Ride:</strong> Cross the Tungabhadra river in a round basket boat.</li>
+                                    <li>• <strong>Matanga Hill:</strong> Hike up for the best sunset view in Hampi.</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="bg-amber-50 p-4 rounded-lg mb-6">
+                            <h4 class="text-md font-bold text-amber-800 mb-1"><i class="fas fa-utensils mr-2"></i>Taste of Hampi</h4>
+                            <p class="text-sm text-gray-700">Lunch at <strong>The Mango Tree</strong>. Try the <em>Thali</em> and <em>Banoffee Pie</em>. Look for street-side <em>Paddu</em> (rice balls) for breakfast.</p>
+                        </div>
+
+                        <div class="bg-stone-100 p-4 rounded-lg border-l-4 border-brand-green">
+                            <span class="block text-xs font-bold text-gray-500 uppercase">Stay</span>
+                            <span class="text-gray-900 font-semibold">Evolve Back Hampi / Gopi Guest House</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Day 3: Mysore -->
+            <div class="relative z-10 reveal">
+                <div class="flex flex-col md:flex-row items-start gap-8">
+                    <div class="w-full md:w-1/2 md:text-right order-2 md:order-1">
+                        <h3 class="text-3xl font-serif font-bold text-gray-900">Royal Mysore</h3>
+                        <p class="text-brand-green font-bold mb-4 uppercase tracking-wide">Dec 31 • New Year's Eve</p>
+                        
+                        <div class="space-y-6">
+                             <div class="flex flex-col md:items-end">
+                                <h4 class="text-lg font-bold text-brand-earth mb-2"><i class="fas fa-crown"></i> Highlights</h4>
+                                <ul class="text-sm text-gray-600 space-y-2">
+                                    <li><strong>Chikmagalur Drive:</strong> Coffee estates en route.</li>
+                                    <li><strong>Mysore Palace:</strong> 2:00 PM - 3:00 PM visit.</li>
+                                    <li><strong>Chamundi Hill:</strong> Blessings at 4:00 PM.</li>
+                                    <li><strong>Brindavan Gardens:</strong> Musical Fountain Light Show.</li>
+                                </ul>
+                            </div>
+
+                            <div class="bg-amber-50 p-4 rounded-lg text-left md:text-right">
+                                <h4 class="text-md font-bold text-amber-800 mb-1"><i class="fas fa-utensils mr-2"></i>Food to Eat</h4>
+                                <p class="text-sm text-gray-700"><strong>Mylari Dosa</strong> for breakfast. <strong>Rao's Mess</strong> for a leaf-meal lunch. Buy <strong>Mysore Pak</strong> from Guru Sweets.</p>
+                            </div>
+
+                            <div class="bg-stone-100 p-4 rounded-lg border-l-4 border-brand-earth inline-block w-full text-left md:text-right">
+                                <span class="block text-xs font-bold text-gray-500 uppercase">Stay</span>
+                                <span class="text-gray-900 font-semibold">Radisson Blu / Royal Orchid Metropole</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="w-12 h-12 bg-brand-earth rounded-full border-4 border-white shadow-lg flex items-center justify-center font-bold text-white z-20 shrink-0 order-1 md:order-2 mt-4">3</div>
+                    
+                    <div class="w-full md:w-1/2 order-3">
+                        <div class="img-zoom-container rounded-xl shadow-xl h-96 overflow-hidden relative">
+                             <!-- Stable Mysore Image -->
+                            <img 
+                                src="https://images.unsplash.com/photo-1582555486855-46543b35582d?q=80&w=800&auto=format&fit=crop" 
+                                onerror="this.src='https://placehold.co/800x600/8B4513/FFF?text=Mysore+Palace'"
+                                class="w-full h-full object-cover img-zoom" 
+                                alt="Mysore Palace"
+                            >
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Day 4: Ooty -->
+            <div class="relative z-10 reveal">
+                <div class="flex flex-col md:flex-row items-start gap-8">
+                    <div class="w-full md:w-1/2 order-2 md:order-1">
+                        <div class="img-zoom-container rounded-xl shadow-xl h-full min-h-[400px] overflow-hidden relative">
+                             <!-- Stable Ooty Image -->
+                            <img 
+                                src="https://images.unsplash.com/photo-1544636605-645396557876?q=80&w=800&auto=format&fit=crop" 
+                                onerror="this.src='https://placehold.co/800x600/2D5A27/FFF?text=Ooty+Tea+Gardens'"
+                                class="w-full h-full object-cover img-zoom" 
+                                alt="Ooty Tea Gardens"
+                            >
+                        </div>
+                    </div>
+                    
+                    <div class="w-12 h-12 bg-brand-green rounded-full border-4 border-white shadow-lg flex items-center justify-center font-bold text-white z-20 shrink-0 order-1 md:order-2 mt-4">4</div>
+                    
+                    <div class="w-full md:w-1/2 order-3">
+                        <h3 class="text-3xl font-serif font-bold text-gray-900">Queen of Hills</h3>
+                        <p class="text-brand-green font-bold mb-4 uppercase tracking-wide">Jan 1 • Happy New Year</p>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                            <div>
+                                <h4 class="text-lg font-bold text-brand-earth mb-2"><i class="fas fa-camera"></i> Visit</h4>
+                                <ul class="text-sm text-gray-600 space-y-2">
+                                    <li>• <strong>Botanical Gardens:</strong> Exotic flora.</li>
+                                    <li>• <strong>Doddabetta Peak:</strong> Highest point in Nilgiris.</li>
+                                    <li>• <strong>Tea Factory:</strong> See how tea is made.</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 class="text-lg font-bold text-brand-earth mb-2"><i class="fas fa-running"></i> Do</h4>
+                                <ul class="text-sm text-gray-600 space-y-2">
+                                    <li>• <strong>Boating:</strong> Morning ride at Ooty Lake.</li>
+                                    <li>• <strong>Market Stroll:</strong> Buy homemade chocolates & eucalyptus oil.</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="bg-amber-50 p-4 rounded-lg mb-6">
+                            <h4 class="text-md font-bold text-amber-800 mb-1"><i class="fas fa-mug-hot mr-2"></i>Taste of Ooty</h4>
+                            <p class="text-sm text-gray-700">Lunch at <strong>Shinkows</strong> (classic Chinese). Grab some <strong>Ooty Varkey</strong> (crusty biscuits) and <strong>Hot Chocolate</strong> near the lake.</p>
+                        </div>
+
+                        <div class="bg-stone-100 p-4 rounded-lg border-l-4 border-brand-green">
+                            <span class="block text-xs font-bold text-gray-500 uppercase">Stay</span>
+                            <span class="text-gray-900 font-semibold">Sterling Ooty Elk Hill / Sinclairs Retreat</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Day 5: Isha & Coimbatore -->
+            <div class="relative z-10 reveal">
+                <div class="flex flex-col md:flex-row items-start gap-8">
+                    <div class="w-full md:w-1/2 md:text-right order-2 md:order-1">
+                        <h3 class="text-3xl font-serif font-bold text-gray-900">The Spiritual Stop</h3>
+                        <p class="text-brand-green font-bold mb-4 uppercase tracking-wide">Jan 2 • Ooty to Coimbatore</p>
+                        
+                        <div class="space-y-6">
+                            <div class="flex flex-col md:items-end">
+                                <h4 class="text-lg font-bold text-brand-earth mb-2"><i class="fas fa-leaf"></i> Coonoor (Morning)</h4>
+                                <p class="text-sm text-gray-600 mb-2">Visit <strong>Sim's Park</strong>, <strong>Lamb's Rock</strong>, and <strong>Dolphin's Nose</strong> for breathtaking views of the Nilgiris.</p>
+                            </div>
+
+                            <div class="bg-gray-900 text-white p-5 rounded-lg shadow-lg inline-block w-full text-left md:text-right">
+                                <h4 class="font-bold border-b border-gray-700 pb-2 mb-2 text-brand-gold"><i class="fas fa-om mr-2"></i>Isha Foundation</h4>
+                                <p class="text-sm mb-2">Visit the massive <strong>Adiyogi Statue</strong> (112 ft). Sit in silence at the <strong>Dhyanalinga</strong>.</p>
+                                <p class="text-xs text-gray-400"><em>Tip: Try the healthy sattvic food at Isha Cafeteria.</em></p>
+                            </div>
+
+                            <div class="bg-stone-100 p-4 rounded-lg border-l-4 border-brand-earth inline-block w-full text-left md:text-right">
+                                <span class="block text-xs font-bold text-gray-500 uppercase">Stay</span>
+                                <span class="text-gray-900 font-semibold">The Residency / Hotel Vivanta (Coimbatore)</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="w-12 h-12 bg-gray-800 rounded-full border-4 border-white shadow-lg flex items-center justify-center font-bold text-white z-20 shrink-0 order-1 md:order-2 mt-4">5</div>
+                    
+                    <div class="w-full md:w-1/2 order-3">
+                        <div class="img-zoom-container rounded-xl shadow-xl h-96 overflow-hidden relative">
+                             <!-- Stable Adiyogi Image -->
+                            <img 
+                                src="https://images.unsplash.com/photo-1621245645607-b30a57e937d3?q=80&w=800&auto=format&fit=crop" 
+                                onerror="this.src='https://placehold.co/800x600/111/FFF?text=Adiyogi'"
+                                class="w-full h-full object-cover img-zoom" 
+                                alt="Adiyogi Statue"
+                            >
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+             <!-- Day 6 & 7: Coorg -->
+             <div class="relative z-10 reveal">
+                <div class="flex flex-col md:flex-row items-start gap-8">
+                    <div class="w-full md:w-1/2 order-2 md:order-1">
+                        <div class="grid grid-cols-1 gap-4 h-full">
+                            <div class="img-zoom-container rounded-xl shadow-xl overflow-hidden h-64">
+                                 <!-- Stable Waterfall Image -->
+                                <img 
+                                    src="https://images.unsplash.com/photo-1572949645841-094f3a9c4c94?q=80&w=800&auto=format&fit=crop" 
+                                    onerror="this.src='https://placehold.co/800x600/4a7c59/FFF?text=Abbey+Falls'"
+                                    class="w-full h-full object-cover img-zoom" 
+                                    alt="Abbey Falls"
+                                >
+                                <div class="p-2 text-center text-sm font-bold bg-white/90 absolute bottom-4 left-4 rounded shadow">Abbey Falls</div>
+                            </div>
+                            <div class="img-zoom-container rounded-xl shadow-xl overflow-hidden h-64">
+                                 <!-- Stable Coffee Image -->
+                                <img 
+                                    src="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?q=80&w=800&auto=format&fit=crop" 
+                                    onerror="this.src='https://placehold.co/800x600/6f4e37/FFF?text=Coffee+Plantation'"
+                                    class="w-full h-full object-cover img-zoom" 
+                                    alt="Coffee Plantation"
+                                >
+                                <div class="p-2 text-center text-sm font-bold bg-white/90 absolute bottom-4 left-4 rounded shadow">Coffee Estate</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="w-12 h-12 bg-brand-green rounded-full border-4 border-white shadow-lg flex items-center justify-center font-bold text-white z-20 shrink-0 order-1 md:order-2 mt-4">6-7</div>
+                    
+                    <div class="w-full md:w-1/2 order-3">
+                        <h3 class="text-3xl font-serif font-bold text-gray-900">The Scotland of India</h3>
+                        <p class="text-brand-green font-bold mb-4 uppercase tracking-wide">Jan 3 & 4 • Coorg</p>
+                        
+                        <div class="space-y-6">
+                            <div class="border-l-2 border-gray-200 pl-4">
+                                <h4 class="font-bold text-xl text-brand-earth mb-2">Day 6: Nature & Sunsets</h4>
+                                <ul class="text-sm text-gray-600 space-y-1">
+                                    <li>• <strong>Raja's Seat:</strong> A garden with a spectacular sunset view.</li>
+                                    <li>• <strong>Abbey Falls:</strong> A roaring waterfall amidst coffee bushes.</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="border-l-2 border-gray-200 pl-4">
+                                <h4 class="font-bold text-xl text-brand-earth mb-2">Day 7: Elephants & Origins</h4>
+                                <ul class="text-sm text-gray-600 space-y-1">
+                                    <li>• <strong>Dubare Elephant Camp:</strong> Watch and bathe elephants (8-11 AM).</li>
+                                    <li>• <strong>Talacauvery:</strong> The origin of the river Cauvery.</li>
+                                    <li>• <strong>Coffee Walk:</strong> Guided tour inside a plantation.</li>
+                                </ul>
+                            </div>
+
+                            <div class="bg-amber-50 p-4 rounded-lg">
+                                <h4 class="text-md font-bold text-amber-800 mb-1"><i class="fas fa-utensils mr-2"></i>Kodava Cuisine</h4>
+                                <p class="text-sm text-gray-700">Must try: <strong>Pandi Curry</strong> (Pork) or <strong>Bamboo Shoot Curry</strong> with <em>Akki Roti</em> (Rice Roti). Drink fresh <strong>Coorg Coffee</strong>.</p>
+                            </div>
+
+                            <div class="bg-stone-100 p-4 rounded-lg border-l-4 border-brand-green">
+                                <span class="block text-xs font-bold text-gray-500 uppercase">Stay</span>
+                                <span class="text-gray-900 font-semibold">Taj Madikeri / Coorg Cliffs Resort</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+             <!-- Day 8: Return -->
+             <div class="relative z-10 reveal">
+                <div class="flex flex-col md:flex-row items-center gap-8">
+                    <div class="w-full md:w-1/2 md:text-right order-2 md:order-1">
+                        <h3 class="text-3xl font-serif font-bold text-gray-900">Homeward Bound</h3>
+                        <p class="text-brand-green font-bold mb-4 uppercase tracking-wide">Jan 5 • 4 AM</p>
+                        <p class="text-gray-600 mb-4">The long drive back home to Hyderabad (830 km). Stock up on coffee powder, chocolates, and spices before you leave!</p>
+                        <div class="inline-flex items-center gap-2 bg-stone-100 px-4 py-2 rounded-full text-sm text-gray-700 font-bold">
+                            <i class="fas fa-home text-brand-earth"></i> Home Sweet Home
+                        </div>
+                    </div>
+                    <div class="w-12 h-12 bg-brand-gold rounded-full border-4 border-white shadow-lg flex items-center justify-center font-bold text-white z-20 shrink-0 order-1 md:order-2">8</div>
+                    <div class="w-full md:w-1/2 order-3">
+                         <div class="h-32 flex items-center justify-center bg-gray-50 rounded-xl border-dashed border-2 border-gray-300">
+                             <span class="text-gray-400 font-medium"><i class="fas fa-check-circle text-green-500 mr-2"></i> Trip Completed!</span>
+                         </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Map Section -->
+    <section id="map" class="bg-brand-light py-20 overflow-hidden">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-serif font-bold text-brand-earth text-center mb-10">Route Visualization</h2>
+            
+            <div class="relative bg-white rounded-2xl shadow-2xl p-6 h-[500px] md:h-[600px] w-full max-w-4xl mx-auto overflow-hidden">
+                <!-- Decorative Map Background (Abstract) -->
+                <div class="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/black-felt.png')]"></div>
+                
+                <!-- SVG Map -->
+                <svg viewBox="0 0 400 600" class="w-full h-full" id="route-map">
+                    <!-- South India Outline (Simplified Abstract Poly) -->
+                    <path d="M50,50 L350,50 L380,300 L300,580 L100,550 L20,300 Z" fill="#f0fdf4" stroke="#e5e7eb" stroke-width="2"/>
+                    
+                    <!-- Route Path -->
+                    <path id="path-line" d="M200,50 L120,200 L160,280 L140,350 L220,400 L100,320 L200,50" 
+                          fill="none" stroke="#D4AF37" stroke-width="4" stroke-dasharray="1000" stroke-dashoffset="1000" stroke-linecap="round" stroke-linejoin="round">
+                        <animate attributeName="stroke-dashoffset" from="1000" to="0" dur="4s" fill="freeze" calcMode="spline" keySplines="0.42 0 0.58 1"/>
+                    </path>
+
+                    <!-- Cities -->
+                    <!-- Hyderabad -->
+                    <g class="city-marker" transform="translate(200, 50)">
+                        <circle r="6" fill="#8B4513" class="animate-pulse-slow"/>
+                        <text x="15" y="5" font-size="12" font-family="Poppins" fill="#333" font-weight="bold">Hyderabad</text>
+                    </g>
+                    <!-- Hampi -->
+                    <g class="city-marker" transform="translate(120, 200)">
+                        <circle r="6" fill="#2D5A27"/>
+                        <text x="-50" y="5" font-size="12" font-family="Poppins" fill="#333" font-weight="bold">Hampi</text>
+                    </g>
+                    <!-- Mysore -->
+                    <g class="city-marker" transform="translate(160, 280)">
+                        <circle r="6" fill="#2D5A27"/>
+                        <text x="15" y="5" font-size="12" font-family="Poppins" fill="#333" font-weight="bold">Mysore</text>
+                    </g>
+                    <!-- Ooty -->
+                    <g class="city-marker" transform="translate(140, 350)">
+                        <circle r="6" fill="#2D5A27"/>
+                        <text x="-45" y="5" font-size="12" font-family="Poppins" fill="#333" font-weight="bold">Ooty</text>
+                    </g>
+                    <!-- Coimbatore -->
+                    <g class="city-marker" transform="translate(220, 400)">
+                        <circle r="6" fill="#2D5A27"/>
+                        <text x="15" y="5" font-size="12" font-family="Poppins" fill="#333" font-weight="bold">Coimbatore</text>
+                    </g>
+                    <!-- Coorg -->
+                    <g class="city-marker" transform="translate(100, 320)">
+                        <circle r="6" fill="#2D5A27"/>
+                        <text x="-50" y="5" font-size="12" font-family="Poppins" fill="#333" font-weight="bold">Coorg</text>
+                    </g>
+
+                    <!-- Vehicle Icon Animation along path -->
+                    <circle r="4" fill="red">
+                         <animateMotion dur="4s" repeatCount="1" fill="freeze" path="M200,50 L120,200 L160,280 L140,350 L220,400 L100,320 L200,50" />
+                    </circle>
+                </svg>
+                <div class="absolute bottom-4 right-4 text-xs text-gray-500">
+                    * Map visualization is illustrative
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stays Section -->
+    <section id="hotels" class="py-20 container mx-auto px-4">
+        <h2 class="text-4xl font-serif font-bold text-brand-earth text-center mb-12">Accommodations</h2>
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            
+            <!-- Hampi -->
+            <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow border-t-4 border-brand-gold reveal card-glow">
+                <div class="p-6">
+                    <h3 class="font-bold text-xl mb-1">Hampi</h3>
+                    <div class="flex items-center text-yellow-500 text-sm mb-4">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+                    </div>
+                    <p class="text-gray-700 font-medium"><i class="fas fa-hotel mr-2 text-gray-400"></i>Evolve Back Hampi</p>
+                    <p class="text-xs text-gray-500 ml-6 mb-2">or Gopi Guest House</p>
+                    <div class="mt-4 pt-4 border-t border-gray-100 flex justify-between items-center text-sm text-gray-600">
+                        <span><i class="fas fa-wifi"></i> Wifi</span>
+                        <span><i class="fas fa-swimming-pool"></i> Pool</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mysore -->
+            <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow border-t-4 border-brand-earth reveal card-glow">
+                <div class="p-6">
+                    <h3 class="font-bold text-xl mb-1">Mysore</h3>
+                    <div class="flex items-center text-yellow-500 text-sm mb-4">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p class="text-gray-700 font-medium"><i class="fas fa-hotel mr-2 text-gray-400"></i>Radisson Blu</p>
+                    <p class="text-xs text-gray-500 ml-6 mb-2">or Royal Orchid</p>
+                    <div class="mt-4 pt-4 border-t border-gray-100 flex justify-between items-center text-sm text-gray-600">
+                        <span><i class="fas fa-utensils"></i> Breakfast</span>
+                        <span><i class="fas fa-spa"></i> Spa</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ooty -->
+            <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow border-t-4 border-brand-green reveal card-glow">
+                <div class="p-6">
+                    <h3 class="font-bold text-xl mb-1">Ooty</h3>
+                    <div class="flex items-center text-yellow-500 text-sm mb-4">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p class="text-gray-700 font-medium"><i class="fas fa-hotel mr-2 text-gray-400"></i>Sterling Ooty Elk Hill</p>
+                    <p class="text-xs text-gray-500 ml-6 mb-2">or Sinclairs Retreat</p>
+                    <div class="mt-4 pt-4 border-t border-gray-100 flex justify-between items-center text-sm text-gray-600">
+                        <span><i class="fas fa-fire"></i> Bonfire</span>
+                        <span><i class="fas fa-mountain"></i> View</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Coimbatore -->
+            <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow border-t-4 border-gray-600 reveal card-glow">
+                <div class="p-6">
+                    <h3 class="font-bold text-xl mb-1">Coimbatore</h3>
+                    <div class="flex items-center text-yellow-500 text-sm mb-4">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p class="text-gray-700 font-medium"><i class="fas fa-hotel mr-2 text-gray-400"></i>The Residency</p>
+                    <p class="text-xs text-gray-500 ml-6 mb-2">or Hotel Vivanta</p>
+                </div>
+            </div>
+
+             <!-- Coorg -->
+             <div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow border-t-4 border-green-700 md:col-span-2 lg:col-span-2 reveal card-glow">
+                <div class="p-6">
+                    <h3 class="font-bold text-xl mb-1">Coorg</h3>
+                    <div class="flex items-center text-yellow-500 text-sm mb-4">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p class="text-gray-700 font-medium"><i class="fas fa-hotel mr-2 text-gray-400"></i>Taj Madikeri Resort & Spa</p>
+                    <p class="text-xs text-gray-500 ml-6 mb-2">or Coorg Cliffs Resort</p>
+                    <div class="mt-4 pt-4 border-t border-gray-100 flex justify-start gap-6 items-center text-sm text-gray-600">
+                        <span><i class="fas fa-tree"></i> Nature Walk</span>
+                        <span><i class="fas fa-coffee"></i> Coffee Tasting</span>
+                        <span><i class="fas fa-infinity"></i> Infinity Pool</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Budget Section -->
+    <section id="budget" class="bg-stone-100 py-20">
+        <div class="container mx-auto px-4 reveal">
+            <h2 class="text-4xl font-serif font-bold text-brand-earth text-center mb-12">LSTS School Trip – Budget Summary</h2>
+            
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden max-w-4xl mx-auto">
+                <div class="grid md:grid-cols-2 gap-0">
+                    
+                    <!-- Left Side: Breakdown -->
+                    <div class="p-8">
+                        <h3 class="text-xl font-bold text-gray-800 mb-6 border-b border-gray-200 pb-2">Cost Breakdown</h3>
+                        
+                        <div class="space-y-4">
+                            <div class="flex justify-between items-start">
+                                <div>
+                                    <p class="font-medium text-gray-700"><i class="fas fa-bus mr-2 text-brand-gold"></i> Travel Cost</p>
+                                    <p class="text-xs text-gray-500">2300 km @ ₹21/km</p>
+                                </div>
+                                <span class="font-bold text-gray-900">₹48,300</span>
+                            </div>
+
+                            <div class="flex justify-between items-start">
+                                <div>
+                                    <p class="font-medium text-gray-700"><i class="fas fa-bed mr-2 text-brand-gold"></i> Stay Cost</p>
+                                    <p class="text-xs text-gray-500">₹7,000/day × 5 days</p>
+                                </div>
+                                <span class="font-bold text-gray-900">₹35,000</span>
+                            </div>
+
+                            <div class="flex justify-between items-start">
+                                <div>
+                                    <p class="font-medium text-gray-700"><i class="fas fa-utensils mr-2 text-brand-gold"></i> Food Cost</p>
+                                    <p class="text-xs text-gray-500">₹500 × 13 people × 5 days</p>
+                                </div>
+                                <span class="font-bold text-gray-900">₹32,500</span>
+                            </div>
+
+                            <div class="flex justify-between items-start">
+                                <div>
+                                    <p class="font-medium text-gray-700"><i class="fas fa-ticket-alt mr-2 text-brand-gold"></i> Tickets & Sightseeing</p>
+                                    <p class="text-xs text-gray-500">₹2,000 × 13 people</p>
+                                </div>
+                                <span class="font-bold text-gray-900">₹26,000</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Side: Totals -->
+                    <div class="bg-brand-earth text-white p-8 flex flex-col justify-center items-center text-center">
+                        <div class="mb-8">
+                            <h4 class="text-lg uppercase tracking-wider opacity-80 mb-2">Total Estimated Cost</h4>
+                            <p class="text-5xl font-bold">₹1,41,800</p>
+                        </div>
+                        
+                        <div class="w-full h-px bg-white/30 my-2"></div>
+                        
+                        <div class="mt-4">
+                            <h4 class="text-sm uppercase tracking-wider opacity-80 mb-1">Per Person Cost</h4>
+                            <p class="text-3xl font-bold text-brand-gold">₹10,900</p>
+                            <p class="text-xs opacity-70 mt-1">(For 13 people)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <p class="text-center text-xs text-gray-500 mt-6">* Estimated costs subject to actual expenditure on the trip.</p>
+        </div>
+    </section>
+
+    <!-- Footer Summary -->
+    <footer id="summary" class="bg-gray-900 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center mb-8">
+                <div class="mb-4 md:mb-0">
+                    <h2 class="text-3xl font-serif font-bold text-brand-gold">LSTS TRIP</h2>
+                    <p class="text-gray-400">Dec 29, 2025 – Jan 5, 2026</p>
+                </div>
+                <div class="flex gap-4">
+                   <div class="text-center">
+                       <span class="block text-2xl font-bold">2300</span>
+                       <span class="text-xs text-gray-500">Kilometers</span>
+                   </div>
+                   <div class="text-center">
+                       <span class="block text-2xl font-bold">5</span>
+                       <span class="text-xs text-gray-500">Cities</span>
+                   </div>
+                   <div class="text-center">
+                       <span class="block text-2xl font-bold">7</span>
+                       <span class="text-xs text-gray-500">Days</span>
+                   </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 pt-8 text-center text-gray-500 text-sm">
+                <p>Pack your bags, charge your cameras, and get ready for the adventure!</p>
+                <p class="mt-2">&copy; 2025 LSTS School Trip Planner</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        (function() {
+            // Countdown Logic
+            const tripDate = new Date("December 29, 2025 18:00:00").getTime();
+
+            const countdownInterval = setInterval(function() {
+                const now = new Date().getTime();
+                const distance = tripDate - now;
+
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                const daysEl = document.getElementById("days");
+                const hoursEl = document.getElementById("hours");
+                const minutesEl = document.getElementById("minutes");
+                const secondsEl = document.getElementById("seconds");
+
+                if (daysEl) daysEl.innerText = days < 10 ? "0" + days : days;
+                if (hoursEl) hoursEl.innerText = hours < 10 ? "0" + hours : hours;
+                if (minutesEl) minutesEl.innerText = minutes < 10 ? "0" + minutes : minutes;
+                if (secondsEl) secondsEl.innerText = seconds < 10 ? "0" + seconds : seconds;
+
+                if (distance < 0) {
+                    clearInterval(countdownInterval);
+                    if (daysEl) daysEl.innerText = "00";
+                    // Optionally show "Trip Started" message
+                }
+            }, 1000);
+
+            // Scroll Animation (Intersection Observer)
+            const revealElements = document.querySelectorAll('.reveal');
+
+            const revealOnScroll = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+
+            revealElements.forEach(el => revealOnScroll.observe(el));
+
+            // Navbar Scroll Effect
+            window.addEventListener('scroll', () => {
+                const nav = document.getElementById('navbar');
+                if (window.scrollY > 50) {
+                    nav.classList.add('shadow-md');
+                    nav.classList.add('py-2');
+                    nav.classList.remove('py-4');
+                } else {
+                    nav.classList.remove('shadow-md');
+                    nav.classList.remove('py-2');
+                    nav.classList.add('py-4');
+                }
+            });
+
+            // Trigger Map Animation on view
+            const mapSection = document.getElementById('map');
+            const mapPath = document.getElementById('path-line');
+            
+            if (mapSection && mapPath) {
+                // Reset animation initially
+                mapPath.style.display = 'none';
+
+                const mapObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if(entry.isIntersecting) {
+                            mapPath.style.display = 'block';
+                            // Re-trigger SVG animation if needed, though declarative SVG animation handles auto-start usually.
+                            // This simple toggle ensures it doesn't run before we see it if browsers lazy load.
+                        }
+                    })
+                });
+                mapObserver.observe(mapSection);
+            }
+        })();
+    </script>
+</body>
+</html>
